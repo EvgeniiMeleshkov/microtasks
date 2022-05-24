@@ -12,21 +12,18 @@ export const Cars = ({cars}: CarsPropsType) => {
 
     let mappedCars = cars.map((el, i) => {
         return (
-            <table key={i}>
-                <tr key={i + 2}>
+
+                <tr key={i}>
                     <th key={el.manufacturer}>{el.manufacturer}</th>
-                </tr>
-                <tr key={i + 4}>
                     <td key={el.model}>{el.model}</td>
                 </tr>
-            </table>
+
         )
     })
 
     return (
-        <>
+        <table>
             {mappedCars}
-
-        </>
+        </table>
     )
 }
