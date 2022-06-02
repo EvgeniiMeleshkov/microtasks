@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import {Header} from './components/Header';
 import {Footer} from './components/Footer';
@@ -8,6 +8,8 @@ import {UseStateButton} from './components/UseStateButton';
 import {Banknotes} from './components/Banknotes';
 import {FullInput} from './components/FullInput';
 import {MessageType} from './someState/someState';
+import {Input} from './components/Input_Button/Input';
+import {Button} from './components/Input_Button/Button';
 
 type AppPropsType = {
     cars: Array<CarType>
@@ -16,12 +18,17 @@ type AppPropsType = {
 
 function App({cars, messages}: AppPropsType) {
 
+    const [value, setValue] = useState('')
+    const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.currentTarget.value)
+    }
     const [messagesArr, setMessages] = useState<Array<MessageType>>(messages)
     const onButtonHandler = (value: string) => {
         setMessages([
             {message: value},
             ...messagesArr
         ])
+        setValue('')
     }
 
     const [lable, setLable] = useState('')
@@ -45,8 +52,11 @@ function App({cars, messages}: AppPropsType) {
 
             <div className="App">
                 <div>
-                    <FullInput onButtonHandler={onButtonHandler} messages={messagesArr}/>
+                    <Input value={value} onTextChange={onTextChange}/>
+                    <Button name={'+'} callBack={() => onButtonHandler(value)}/>
+                    {/*<FullInput onButtonHandler={onButtonHandler} messages={messagesArr}/>*/}
                 </div>
+                {messagesArr.map(m => <h5>{m.message}</h5>)}
                 <hr/>
                 <div>
                     <Cars cars={cars}/>
